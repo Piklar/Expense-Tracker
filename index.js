@@ -6,13 +6,14 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+const cors = require('cors');
+app.use(cors());
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 const expenseRoutes = require("./routes/Expense-Routes.js");
-
 
 
 // MongoDB Connection

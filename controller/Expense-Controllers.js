@@ -90,3 +90,37 @@ module.exports.deleteExpense = (req, res) => {
         });
     });
 }
+
+// Update specific Expense using ID
+module.exports.updateExpense = (req, res) => {
+    const { expenseId } = req.params;
+    const { expensename, expensetype, price, description, date, paymentMethod } = req.body;
+    
+    return Expense.findByIdAndUpdate(
+        expenseId,
+        { expensename, expensetype, price, description, date, paymentMethod },
+        { new: true }
+    )
+        .then((result) => {
+            if (!result) {
+                return res.status(404).send({
+                    code: "Expense Not Found",
+                    message: "There is no expense recording with the given ID."
+                });
+            } else {
+                return res.status(200).send({
+                    code: "Expense Updated",
+                    message: `The expense with ID ${expenseId} has been updated successfully.`,
+                    result: result
+                });
+            }
+        })
+        .catch((error) => {
+            return res.status(500).send({
+                code: "SERVER_ERROR",
+                message: "An error occurred while updating the expense. Please try again later.",
+                error: error.message
+            });
+        });
+};
+

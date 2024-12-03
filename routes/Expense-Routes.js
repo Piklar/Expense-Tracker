@@ -15,5 +15,7 @@ router.get("/search/:expenseId", expenseController.getSpecificExpense);
 //Delete specific Expense by ID
 router.delete("/delete/:expenseId", expenseController.deleteExpense);
 
+//Update specific Expense by ID
+router.put("/update/:expenseId", expenseController.updateExpense);
 
 module.exports = router;
