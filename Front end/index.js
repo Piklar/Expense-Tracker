@@ -6,7 +6,7 @@ const apiUpdateExpense = 'http://localhost:4000/expense/update/';
 // Get elements
 const expenseForm = document.getElementById('expense-form');
 const expensesList = document.getElementById('expenses-list');
-let expenses = []; // Global array to hold all fetched expenses
+let expenses = [];
 
 // Fetch and display all expenses
 const fetchExpenses = async () => {
@@ -14,10 +14,10 @@ const fetchExpenses = async () => {
         const response = await fetch(apiBaseUrl);
         const data = await response.json();
         
-        expenses = data.result; // Populate the global array with fetched data
+        expenses = data.result;
 
         const expensesTableBody = document.getElementById('expenses-table-body');
-        expensesTableBody.innerHTML = ''; // Clear existing rows before adding new ones
+        expensesTableBody.innerHTML = ''; 
 
         data.result.forEach((expense) => {
             const row = document.createElement('tr');
@@ -74,15 +74,12 @@ expenseForm.addEventListener('submit', async (event) => {
 
 // Show confirmation modal when delete button is clicked
 const deleteExpense = (id) => {
-    // Show the delete confirmation modal
     const modal = document.getElementById('delete-confirmation-modal');
     modal.style.display = 'block';
 
-    // Get the "Yes" and "No" buttons
     const yesButton = document.getElementById('delete-confirm-yes');
     const noButton = document.getElementById('delete-confirm-no');
 
-    // Event listener for "Yes" button
     yesButton.onclick = async () => {
         try {
             const response = await fetch(`${apiDeleteExpense}${id}`, {
@@ -93,18 +90,18 @@ const deleteExpense = (id) => {
             }
             const result = await response.json();
             alert(result.message || 'Expense deleted successfully!');
-            fetchExpenses(); // Refresh the list after deletion
-            modal.style.display = 'none'; // Hide the modal
+            fetchExpenses();
+            modal.style.display = 'none';
         } catch (error) {
             console.error('Error deleting expense:', error);
             alert('Failed to delete expense. Please try again.');
-            modal.style.display = 'none'; // Hide the modal on error
+            modal.style.display = 'none';
         }
     };
 
     // Event listener for "No" button
     noButton.onclick = () => {
-        modal.style.display = 'none'; // Hide the modal if "No" is clicked
+        modal.style.display = 'none';
     };
 };
 
@@ -156,7 +153,7 @@ const editExpense = (id) => {
     
             const result = await response.json();
             alert(result.message || 'Expense updated successfully!');
-            fetchExpenses(); // Refresh the list after updating
+            fetchExpenses();
             document.getElementById('edit-modal').style.display = 'none';
         } catch (error) {
             console.error('Error updating expense:', error);
